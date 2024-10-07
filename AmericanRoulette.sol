@@ -40,8 +40,14 @@ contract AmericanRoulette {
         else return BetType.Black; // Odd numbers are black
     }
 
-    // Internal function to distribute winnings based on spin result
-    function _distributeWinnings(BetType result) internal {
-        for (uint256 i = 0; i < bets[msg.sender].length; i++) {
-            Bet memory bet = bets[msg.sender][i];
-            if (bet.bet
+// Internal function to distribute winnings based on spin result
+function _distributeWinnings(BetType result) internal {
+    for (uint256 i = 0; i < bets[msg.sender].length; i++) {
+        Bet memory bet = bets[msg.sender][i];
+        if (bet.betType == result) {
+            // Payout 2x the bet amount for winning bets
+            winnings[bet.player] += bet.amount * 2;
+        }
+    }
+}
+
